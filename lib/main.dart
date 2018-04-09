@@ -54,7 +54,7 @@ class SearchViewState extends State<SearchView> {
 			appBar: new AppBar(
 				title: t("Purdue Directory")
 			),
-			body: _buildRow()
+//			body: _buildRow()
 		);
 	}
 }
