@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../purdue_directory/fields.dart';
-import '../purdue_directory/query.dart';
+import '../directory_api/fields.dart';
+import '../directory_api/query.dart';
+import 'results.dart';
 
 class SearchView extends StatefulWidget {
 	@override
@@ -9,21 +10,28 @@ class SearchView extends StatefulWidget {
 
 class _SearchViewState extends State<SearchView> {
 	final TextEditingController _textController = new TextEditingController();
-	Query query = Query("", Pool.values[0], SearchBy.values[0], Campus.values[0],
-		Department.values[0], School.values[0]);
+	Query _query = Query("", Pool.values[0], Field.values[0], Campus.values[0], Department.values[0],
+		School.values[0]);
 
-	void _handleSubmitted() {
-		_textController.clear();
+	void _handleSubmitted() async {
+		_query.setQuery(_textController.text);
+
+
+		Navigator.of(context).push(
+			new MaterialPageRoute(
+				builder: (context) => new ResultsView([])
+			)
+		);
 	}
 
-	Widget _buildRow(String label, Widget input) {
+	Padding _buildRow(String label, Widget input) {
 		return new Padding(
 			padding: new EdgeInsets.all(16.0),
 			child: new Row(
 				mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 				children: <Widget>[
-					new Text(label,
-						style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 18.0)),
+					new Text(
+						label, style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 18.0)),
 					new Expanded(
 						child: new Padding(
 							padding: new EdgeInsets.only(left: 16.0),
@@ -35,7 +43,7 @@ class _SearchViewState extends State<SearchView> {
 		);
 	}
 
-	Widget _buildInput(String hint, TextEditingController controller) {
+	TextField _buildInput(String hint, TextEditingController controller) {
 		return new TextField(
 			controller: controller,
 			decoration: new InputDecoration.collapsed(
@@ -43,63 +51,99 @@ class _SearchViewState extends State<SearchView> {
 				hintStyle: new TextStyle(fontSize: 18.0),
 				border: new UnderlineInputBorder(),
 			),
-			style: new TextStyle(
-				fontSize: 20.0,
-				color: Colors.black
-			),
+			style: new TextStyle(fontSize: 20.0, color: Colors.black),
 		);
 	}
 
-	Widget _buildDropdown(List choices, String value) {
-		List<String> stringChoices = _mapToStrings(choices);
-
-		return new DropdownButton(
-			items: stringChoices.map((choice) => new DropdownMenuItem(
-				child: new Text(choice,
-					style: new TextStyle(fontSize: 18.0),
-				)
-			)).toList(),
-			onChanged: (v) => this,
-		);
-	}
-
-	Widget _buildButton(IconData icon, String text, Function clickHandler) {
+	Padding _buildButton(IconData icon, String text, Function clickHandler) {
 		return new Padding(
 			padding: new EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0),
 			child: new RaisedButton.icon(
 				icon: new Icon(icon),
 				label: new Text(text),
 				onPressed: clickHandler,
-				color: Theme.of(context).primaryColor,
-				textColor: Theme.of(context).primaryTextTheme.title.color,
+				color: Theme
+					.of(context)
+					.primaryColor,
+				textColor: Theme
+					.of(context)
+					.primaryTextTheme
+					.title
+					.color,
 			),
 		);
 	}
 
-	List<String> _mapToStrings(List pValues) {
-		List<String> res = [];
-		pValues.forEach((p) => res.add(p
+	DropdownMenuItem _buildListItem(dynamic x) {
+		return new DropdownMenuItem(
+			value: x,
+			child: new Text(_stringify(x), style: new TextStyle(fontSize: 18.0))
+		);
+	}
+
+	String _stringify(dynamic x) {
+		return x
 			.toString()
-			.substring(p.toString().indexOf(".") + 1)
-			.replaceAllMapped(new RegExp('([A-Z])'), (match) => ' ${match[1]}') // Add spaces
-			.replaceAllMapped(new RegExp('(.)(.*)'), (match) => '${match[1].toUpperCase()}${match[2]}'))); // Capitalize first letter
-		return res;
+			.substring(x.toString().indexOf(".") + 1)
+			.replaceAllMapped(new RegExp('([A-Z])'), (match) => ' ${match[1]}')
+			.replaceAllMapped(
+			new RegExp('(.)(.*)'), (match) => '${match[1].toUpperCase()}${match[2]}');
+	}
+
+	Function _buildSetState(Function setter) {
+		return (dynamic x) =>
+			setState(() {
+				setter(x);
+			});
 	}
 
 	@override
 	Widget build(BuildContext context) {
 		return new Scaffold(
-			appBar: new AppBar(
-				title: new Text("Purdue Directory")
-			),
+			appBar: new AppBar(title: new Text("Purdue Directory")),
 			body: new ListView(
 				children: <Widget>[
 					_buildRow("Query", _buildInput("Your Query", _textController)),
-					_buildRow("Pool", _buildDropdown(Pool.values, query.school)),
-					_buildRow("Field", _buildDropdown(SearchBy.values)),
-					_buildRow("Campus", _buildDropdown(Campus.values)),
-					_buildRow("Department", _buildDropdown(Department.values)),
-					_buildRow("School", _buildDropdown(School.values)),
+					_buildRow(
+						"Pool",
+						new DropdownButton(
+							value: _query.pool,
+							items: Pool.values.map(_buildListItem).toList(),
+							onChanged: _buildSetState(_query.setPool),
+						)
+					),
+					_buildRow(
+						"Field",
+						new DropdownButton(
+							value: _query.field,
+							items: Field.values.map(_buildListItem).toList(),
+							onChanged: _buildSetState(_query.setField)
+						)
+					),
+					_buildRow(
+						"Campus",
+						new DropdownButton(
+							value: _query.campus,
+							items: Campus.values.map(_buildListItem).toList(),
+							onChanged: _buildSetState(_query.setCampus),
+						)
+					),
+					_buildRow(
+						"Department",
+						new DropdownButton(
+							value: _query.department,
+							items: Department.values.map(_buildListItem).toList(),
+							onChanged: _buildSetState(_query.setDepartment),
+						)
+					),
+					_buildRow(
+						"School",
+						new DropdownButton(
+							value: _query.school,
+							items: School.values.map(_buildListItem).toList(),
+							onChanged: _buildSetState(_query.setSchool),
+						)
+					),
 					_buildButton(Icons.search, "Search", this._handleSubmitted),
 				],
 			),

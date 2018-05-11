@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-import '../purdue_directory/person.dart';
+import '../directory_api/person.dart';
 
-class ResultsView extends StatefulWidget {
+class ResultsView extends StatelessWidget {
 	final List<Person> _people;
 
 	ResultsView(this._people);
-
-	@override
-	State<ResultsView> createState() => new _ResultsState(_people);
-}
-
-class _ResultsState extends State<ResultsView> {
-	List<Person> _people;
-
-	_ResultsState(this._people);
 
 	Widget toListItem(Person person) {
 		return new ListTile(
@@ -31,7 +22,7 @@ class _ResultsState extends State<ResultsView> {
 				title: new Text("Search Results")
 			),
 			body: new ListView(
-				children: _people.map(toListItem),
+				children: _people.map(toListItem).toList(),
 			),
 		);
 	}

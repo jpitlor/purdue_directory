@@ -1,6 +1,6 @@
 enum Pool { all, student, staff }
 
-enum SearchBy { name, email, alias, phone }
+enum Field { name, email, alias, phone }
 
 enum Campus {
   all,
