@@ -6,9 +6,31 @@ class PersonView extends StatelessWidget {
 
 	PersonView(this._person);
 
-	Row _buildActions() {
-		return new Row(
+	void _call() {
 
+	}
+
+	void _text() {
+
+	}
+
+	void _email() {
+
+	}
+
+	void _goToWebsite() {
+
+	}
+
+	Widget _buildActions() {
+		return new Row(
+			mainAxisAlignment: MainAxisAlignment.spaceAround,
+			children: <Widget>[
+				new IconButton(icon: new Icon(Icons.phone), onPressed: _call),
+				new IconButton(icon: new Icon(Icons.message), onPressed: _text),
+				new IconButton(icon: new Icon(Icons.email), onPressed: _email),
+				new IconButton(icon: new Icon(Icons.link), onPressed: _goToWebsite)
+			],
 		);
 	}
 
@@ -21,7 +43,25 @@ class PersonView extends StatelessWidget {
 			body: new Column(
 				children: <Widget>[
 					_buildActions(),
-
+					// name
+					// alias
+					// nickname
+					// email
+					// campus
+					// dept
+					// title
+					// school
+					// fax
+					// pager
+					// phone
+					// building
+					// office
+					// office hours
+					// qualified name
+					// comment
+					// project
+					// url
+					// todo: pgp key
 				],
 			),
 		);
