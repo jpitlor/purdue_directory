@@ -12,7 +12,7 @@ class ResultsView extends StatelessWidget {
 			title: new Text(person.toString(),
 				style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
 			subtitle: new Text(person.email),
-			leading: new ImageIcon(new NetworkImage(person.profilePicture)),
+//			leading: new ImageIcon(new NetworkImage(person.profilePicture)), TODO: Get ITaP approval for Microsoft APIs
 			onTap: () {
 				Navigator.of(context).push(
 					new MaterialPageRoute(

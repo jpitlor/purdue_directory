@@ -6,6 +6,12 @@ class PersonView extends StatelessWidget {
 
 	PersonView(this._person);
 
+	Row _buildActions() {
+		return new Row(
+
+		);
+	}
+
 	@override
 	Widget build(BuildContext context) {
 		return new Scaffold(
@@ -14,6 +20,8 @@ class PersonView extends StatelessWidget {
 			),
 			body: new Column(
 				children: <Widget>[
+					_buildActions(),
+
 				],
 			),
 		);
