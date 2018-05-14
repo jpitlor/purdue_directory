@@ -6,20 +6,26 @@ import 'package:html/dom.dart';
 
 import 'person.dart';
 import 'query.dart';
+import 'fields.dart';
 
 class Api {
-  Future<List<Person>> search(Query query) async {
+  static Future<List<Person>> search(Query query) async {
     http.Response httpResponse = await http.post('http://purdue.edu/directory/Advanced', body: {
       "SearchString": query.query,
-      "SelectedSearchId": query.pool,
-      "UsingParam": query.field,
-      "CampusParam": query.campus,
-      "DepartmentParam": query.department,
-      "School Param": query.school
+      "SelectedSearchTypeId": Pool.values.indexOf(query.pool).toString(),
+      "UsingParam": _stringify(query.field),
+      "CampusParam": _stringify(query.campus),
+      "DepartmentParam": _stringify(query.department),
+      "SchoolParam": _stringify(query.school)
     });
+
     Document document = parser.parse(httpResponse.body);
     List<Element> results = document.getElementById('results').getElementsByTagName('li');
-    List<Person> people;
+
+    if (results.isEmpty)
+      throw Exception(document.getElementById('results').getElementsByTagName('p')[0].text);
+
+    List<Person> people = [];
     for (var e in results) {
       String fullName = e.getElementsByClassName("cn-name")[0].text;
       if (fullName == "") continue;
@@ -68,7 +74,21 @@ class Api {
     return people;
   }
 
-  String _findInDOM(Element hay, String needle) {
+  static String _stringify(dynamic og) {
+    return og.toString()
+        .substring(og.toString().indexOf(".") + 1)
+        .replaceAll("0", " ")
+        .replaceAll("1", "/")
+        .replaceAll("2", "-")
+        .replaceAll("3", ".")
+        .replaceAll("4", ",")
+        .replaceAll("5", ":")
+        .replaceAll("6", "(")
+        .replaceAll("7", ")")
+        .replaceAll("8", "'");
+  }
+
+  static String _findInDOM(Element hay, String needle) {
     List<Element> els = hay.getElementsByTagName("th");
     for (int i = 0; i < els.length; i++) {
       Element e = els[i];
@@ -79,7 +99,7 @@ class Api {
     return "";
   }
 
-  String _getProfilePictureURL(String username) {
-    return "https://nam.delve.office.com/mt/v3/people/profileimage?userId=$username%40purdue.edu&size=L";
+  static String _getProfilePictureURL(String username) {
+    return "https://graph.microsoft.com/v1.0/users/$username@purdue.edu/photo/\$value";
   }
 }
