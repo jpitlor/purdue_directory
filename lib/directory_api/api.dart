@@ -30,6 +30,7 @@ class Api {
       String fullName = e.getElementsByClassName("cn-name")[0].text;
       if (fullName == "") continue;
 
+      List<String> nameParts = fullName.split(" ");
       String alias = _findInDOM(e, "alias");
       String profilePicture = _getProfilePictureURL(alias);
       String nickname = _findInDOM(e, "nickname");
@@ -51,6 +52,9 @@ class Api {
 
       people.add(new Person(
           fullName,
+          nameParts[0],
+          nameParts.length == 3 ? nameParts[1] : "",
+          nameParts.length == 3 ? nameParts[2] : nameParts[1],
           profilePicture,
           alias,
           nickname,

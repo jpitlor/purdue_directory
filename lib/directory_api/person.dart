@@ -1,5 +1,8 @@
 class Person {
   String _fullName;
+  String _firstName;
+  String _middleName;
+  String _lastName;
   String _profilePicture;
   String _alias;
   String _nickname;
@@ -20,6 +23,12 @@ class Person {
   String _url;
 
   String get fullName => _fullName;
+
+  String get firstName => _firstName;
+
+  String get middleName => _middleName;
+
+  String get lastName => _lastName;
 
   String get alias => _alias;
 
@@ -57,24 +66,21 @@ class Person {
 
   String get url => _url;
 
-  Person(
-      this._fullName,
-      this._profilePicture,
-      this._alias,
-      this._nickname,
-      this._email,
-      this._campus,
-      this._department,
-      this._title,
-      this._school,
-      this._fax,
-      this._pager,
-      this._otherPhone,
-      this._building,
-      this._office,
-      this._officeHours,
-      this._qualifiedName,
-      this._comment,
-      this._project,
-      this._url);
+  Person(this._fullName, this._firstName, this._middleName, this._lastName, this._profilePicture,
+    this._alias, this._nickname, this._email, this._campus, this._department, this._title,
+    this._school, this._fax, this._pager, this._otherPhone, this._building, this._office,
+    this._officeHours, this._qualifiedName, this._comment, this._project, this._url);
+
+  String _titleCase(String s) {
+    return s[0].toUpperCase() + s.substring(1);
+  }
+
+  @override
+  String toString() {
+    if (_middleName != "") {
+      return "${_titleCase(_firstName)} ${_titleCase(_middleName)} ${_titleCase(_lastName)}";
+    } else {
+      return "${_titleCase(_firstName)} ${_titleCase(_lastName)}";
+    }
+  }
 }

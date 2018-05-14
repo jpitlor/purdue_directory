@@ -9,7 +9,7 @@ class ResultsView extends StatelessWidget {
 
 	Widget toListItem(Person person, BuildContext context) {
 		return new ListTile(
-			title: new Text(person.fullName,
+			title: new Text(person.toString(),
 				style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
 			subtitle: new Text(person.email),
 			leading: new ImageIcon(new NetworkImage(person.profilePicture)),

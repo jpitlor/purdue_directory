@@ -10,7 +10,7 @@ class PersonView extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return new Scaffold(
 			appBar: new AppBar(
-				title: new Text(_person.fullName)
+				title: new Text(_person.toString())
 			),
 			body: new Column(
 				children: <Widget>[

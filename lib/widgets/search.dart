@@ -43,7 +43,7 @@ class _SearchViewState extends State<SearchView> {
           builder: (context) {
             return new AlertDialog(
               title: new Text("No Results Found"),
-              content: new Text(e.toString()),
+              content: new Text(e.toString().substring("Exception: ".length)),
               actions: <Widget>[
                 new FlatButton(
                   child: new Text('OK'),
@@ -57,7 +57,7 @@ class _SearchViewState extends State<SearchView> {
 
   Padding _buildRow(String label, String value, Widget input) {
     return new Padding(
-      padding: new EdgeInsets.all(16.0),
+      padding: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: new Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         new Flexible(
           child: new RichText(
@@ -88,16 +88,16 @@ class _SearchViewState extends State<SearchView> {
       controller: controller,
       decoration: new InputDecoration.collapsed(
         hintText: hint,
-        hintStyle: new TextStyle(fontSize: 22.0),
+        hintStyle: new TextStyle(fontSize: 25.0),
         border: new UnderlineInputBorder(),
       ),
-      style: new TextStyle(fontSize: 22.0, color: Colors.black),
+      style: new TextStyle(fontSize: 25.0, color: Colors.black),
     );
   }
 
   Padding _buildButton(IconData icon, String text, Function clickHandler) {
     return new Padding(
-      padding: new EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0),
+      padding: new EdgeInsets.symmetric(vertical: 32.0, horizontal: 64.0),
       child: new RaisedButton.icon(
         icon: new Icon(icon),
         label: new Text(text),
@@ -150,11 +150,11 @@ class _SearchViewState extends State<SearchView> {
       body: new ListView(
         children: <Widget>[
           new Padding(
-            padding: new EdgeInsets.all(16.0),
+            padding: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
             child: new Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               new Text("Query",
                   overflow: TextOverflow.ellipsis,
-                  style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 22.0)),
+                  style: new TextStyle(fontWeight: FontWeight.w700, fontSize: 25.0)),
               new Expanded(
                 child: new Padding(
                   padding: new EdgeInsets.symmetric(horizontal: 16.0),
