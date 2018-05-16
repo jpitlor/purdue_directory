@@ -10,6 +10,8 @@ dependencies:
   cupertino_icons: ^0.1.0
   http: ^0.11.3
   html: any
+  font_awesome_flutter: any
+  url_launcher: any
 
 dev_dependencies:
   flutter_test:
