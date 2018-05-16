@@ -1,6 +1,6 @@
 # Purdue Directory
 
-An app to view the Purdue Directory. Made with [Flutter](flutter.io)
+An app to view the Purdue Directory. Made with [Flutter](http://flutter.io)
 
 ## TODO
 
