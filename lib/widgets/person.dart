@@ -13,7 +13,11 @@ class PersonView extends StatelessWidget {
 
     return new Column(
       children: <Widget>[
-        new IconButton(icon: new Icon(icon), onPressed: () { launch(value); }),
+        new IconButton(
+            icon: new Icon(icon),
+            onPressed: () {
+              launch(value);
+            }),
         new Text(label)
       ],
     );
@@ -44,25 +48,27 @@ class PersonView extends StatelessWidget {
         : new Icon(iconData);
 
     return new Padding(
-      padding: new EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-      child: new Row(children: [
-        new Padding(
-          padding: new EdgeInsets.only(right: 15.0),
-          child: icon,
-        ),
-        new Padding(
-            padding: new EdgeInsets.only(right: 10.0),
-            child:
-                new Text(label, style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0))
-        ),
-        new Text(
-          property,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 5,
-          style: new TextStyle(fontSize: 18.0),
-        )
-      ]),
-    );
+        padding: new EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+        child: new Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            new Padding(
+              padding: new EdgeInsets.only(right: 15.0),
+              child: icon,
+            ),
+            new Padding(
+                padding: new EdgeInsets.only(right: 10.0),
+                child: new Text(label,
+                    style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0))),
+            new Flexible(
+                child: new Text(
+              property,
+              softWrap: true,
+              maxLines: 3,
+              style: new TextStyle(fontSize: 18.0),
+            ))
+          ],
+        ));
   }
 
   @override
@@ -87,15 +93,13 @@ class PersonView extends StatelessWidget {
       _buildRow(FontAwesomeIcons.comment, "Comment", _person.comment),
       _buildRow(null, "Project", _person.project),
       _buildRow(FontAwesomeIcons.link, "URL", _person.url),
-      // todopgp key
+      // todo pgp key
     ];
     children.removeWhere((w) => w == null);
 
     return new Scaffold(
       appBar: new AppBar(title: new Text(_person.toString())),
-      body: new ListView(
-        children: children,
-      ),
+      body: new ListView(children: children),
     );
   }
 }

@@ -69,7 +69,7 @@ class _SearchViewState extends State<SearchView> {
 	              ]
 	          ),
 	          overflow: TextOverflow.clip,
-	          maxLines: 1,
+	          maxLines: 2,
           )
         ),
         new Flexible(
@@ -138,9 +138,11 @@ class _SearchViewState extends State<SearchView> {
                   .toList());
         });
 
-    setState(() {
-      setter(val);
-    });
+    if (val != null) {
+      setState(() {
+        setter(val);
+      });
+    }
   }
 
   @override
