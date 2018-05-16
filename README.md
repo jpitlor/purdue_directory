@@ -1,12 +1,7 @@
-# purdue_directory
+# Purdue Directory
 
-An app to view the Purdue Directory
+An app to view the Purdue Directory. Made with [Flutter](flutter.io)
 
-## Getting Started
+## TODO
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
-
-# TODO
-
-- Support PGP/GPG keys
+Support PGP/GPG keys (which requires an extra HTTP request since it displays in a popup)
