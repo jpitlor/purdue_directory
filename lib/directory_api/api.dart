@@ -10,7 +10,7 @@ import 'fields.dart';
 
 class Api {
   static Future<List<Person>> search(Query query) async {
-    http.Response httpResponse = await http.post('http://purdue.edu/directory/Advanced', body: {
+    http.Response httpResponse = await http.post('https://purdue.edu/directory/Advanced', body: {
       "SearchString": query.query,
       "SelectedSearchTypeId": Pool.values.indexOf(query.pool).toString(),
       "UsingParam": _stringify(query.field),
